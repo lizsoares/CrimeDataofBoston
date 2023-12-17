@@ -13,7 +13,6 @@ import pandas as pd
 import calendar
 #Python | Calendar module. (n.d.). GeeksforGeeks. https://www.geeksforgeeks.org/python-calendar-module/
 import pydeck as pdk
-import plotly.express as px
 
 data = pd.read_csv("bostoncrime2023_7000_sample.csv")
 def most_common_day(data, selected_district="All Districts"):
@@ -88,7 +87,7 @@ if selected_crime_type == correct_crime_type:
 else:
     st.sidebar.write(
         f"No, the most common type of crime in the {selected_district} district is :green[{correct_crime_type}].")
-intro, bar_graph, pie_chart = st.tabs(["Introduction", "Bar Graph", "Pie Chart"])
+intro, bar_graph = st.tabs(["Introduction", "Bar Graph",])
 # St.pydeck_chart. (2023). Streamlit Inc. https://docs.streamlit.io/library/api-reference/charts/st.pydeck_chart
 with intro:
     st.header("Boston Crime")
@@ -137,16 +136,4 @@ with bar_graph:
         crime_counts_per_type = most_common_crime_type(selected_district)
         st.bar_chart(crime_counts_per_type)
         st.markdown(f"**Most Common Type:** :green[{crime_counts_per_type.idxmax()}]")
-with pie_chart:
-    crimes_per_month = data['Month'].value_counts().sort_index().reset_index()
-    crimes_per_month.columns = ['Month', 'count']
-    st.write(crimes_per_month)
-    fig = px.pie(
-        data_frame=crimes_per_month,
-        names='Month',
-        values='count',
-        title="Distribution of Crimes per Month",
-        labels={'Month': 'Month', 'count': 'Crime Count'}
-    )
-    st.plotly_chart(fig)
     #Pie Charts in Python. (2023). Plotly. https://plotly.com/python/pie-charts/
